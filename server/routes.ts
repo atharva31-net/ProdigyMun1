@@ -10,6 +10,26 @@ const adminLoginSchema = z.object({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Root route - API status
+  app.get("/", (req, res) => {
+    res.json({
+      message: "Prodigy MUN 2025 API Server",
+      status: "running",
+      version: "1.0.0",
+      endpoints: {
+        health: "/api/registrations/stats",
+        admin_login: "POST /api/admin/login",
+        registrations: "GET/POST /api/registrations",
+        registration_management: "PATCH/DELETE /api/registrations/:id"
+      }
+    });
+  });
+
+  // Health check endpoint
+  app.get("/health", (req, res) => {
+    res.json({ status: "healthy", timestamp: new Date().toISOString() });
+  });
+
   // Admin authentication
   app.post("/api/admin/login", async (req, res) => {
     try {
