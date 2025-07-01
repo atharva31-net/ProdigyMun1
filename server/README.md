@@ -39,6 +39,14 @@ npm run start
 4. **Deploy:**
    - Render will automatically build and deploy on every push to main branch
 
+## Build Dependencies
+
+All build dependencies (including `esbuild` and TypeScript types) are included in `dependencies` rather than `devDependencies` to ensure they're available during Render's build process.
+
+## Production Build
+
+The production build uses `index.prod.ts` which excludes Vite development dependencies, ensuring a clean build for deployment. This file contains only the Express server and API routes needed for production.
+
 ## Database Setup
 
 This backend uses PostgreSQL with Drizzle ORM. 

@@ -101,6 +101,7 @@ The application is restructured for independent frontend and backend deployments
 - July 01, 2025: Updated admin credentials as specified (admin: prodigymun0, pass: munprodiy#123@12@12)
 - July 01, 2025: Migrated from in-memory storage to PostgreSQL database with Drizzle ORM
 - July 01, 2025: Restructured project for separate frontend/backend deployment with independent package.json files
+- July 01, 2025: Fixed Render deployment build errors by creating production-specific server file and moving build dependencies
 
 ## Changelog
 - July 01, 2025: Initial setup

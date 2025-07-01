@@ -26,11 +26,11 @@ app.use((req, res, next) => {
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse).substring(0, 100)}`;
       }
 
       if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
+        logLine = logLine.substring(0, 79) + "…";
       }
 
       log(logLine);
@@ -51,23 +51,17 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Setup environment-specific serving
-  if (process.env.NODE_ENV === "development") {
-    // Only import and setup Vite in development
-    const { setupVite } = await import("./vite");
-    await setupVite(app, server);
-  } else {
-    // In production, just serve the API without frontend
-    console.log("Production mode: serving API only");
-  }
+  // Production mode: API only
+  console.log("Production mode: serving API only");
 
-  // Use PORT environment variable in production, 5000 in development
-  const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+  // Use PORT environment variable in production
+  const port = process.env.PORT ? parseInt(process.env.PORT) : 8000;
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+  },
+  () => {
+    log(`Server running on port ${port}`);
   });
 })();

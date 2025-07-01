@@ -173,18 +173,25 @@ Currently using in-memory storage. To migrate to PostgreSQL:
 ### Common Issues
 
 1. **Build failures:**
-   - Check Node.js version compatibility
+   - **"esbuild: not found" error**: Fixed - all build dependencies are now in `dependencies` and production build uses `index.prod.ts`
+   - Check Node.js version compatibility (recommended: Node 20+)
    - Verify all dependencies are in package.json
    - Check build logs for specific errors
 
 2. **API connection issues:**
-   - Verify backend URL in netlify.toml
-   - Check CORS configuration
-   - Verify environment variables
+   - Verify backend URL in netlify.toml matches your deployed Render URL
+   - Check CORS configuration in server code
+   - Verify environment variables are set correctly
 
-3. **Admin login not working:**
+3. **Database connection issues:**
+   - Ensure DATABASE_URL environment variable is set in Render
+   - Check PostgreSQL database is accessible from Render
+   - Verify database tables exist (run `npm run db:push` if needed)
+
+4. **Admin login not working:**
    - Check hardcoded credentials in storage.ts
    - Verify session storage functionality
+   - Check database connection for user authentication
 
 ### Support
 
