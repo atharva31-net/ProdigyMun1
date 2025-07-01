@@ -1,20 +1,37 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { insertRegistrationSchema, type InsertRegistration } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { NotebookPen, Flag, Globe } from "lucide-react";
-import { COMMITTEES, GRADES, DIVISIONS } from "@/lib/constants";
+import {
+  COMMITTEES,
+  GRADES,
+  DIVISIONS,
+} from "@shared-constants"; // ✅ Safe shared import
+
 import {
   Dialog,
   DialogContent,
@@ -22,6 +39,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
+// ✅ Define the form type manually (since Drizzle can't be used in frontend)
+type InsertRegistration = {
+  name: string;
+  email: string;
+  grade: string;
+  committee: string;
+  division: string;
+  experience: string;
+  motivation: string;
+  phone: string;
+};
 
 export default function RegistrationForm() {
   const { toast } = useToast();
