@@ -30,6 +30,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ status: "healthy", timestamp: new Date().toISOString() });
   });
 
+  // Debug endpoint
+  app.get("/api/debug", (req, res) => {
+    res.json({ message: "Debug endpoint working", path: req.path, url: req.url });
+  });
+
   // Admin authentication
   app.post("/api/admin/login", async (req, res) => {
     try {
@@ -44,6 +49,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, user: { id: user.id, username: user.username } });
     } catch (error) {
       res.status(400).json({ message: "Invalid request data" });
+    }
+  });
+
+  // Registration stats endpoint (must come before other registration routes)
+  app.get("/api/registrations/stats", async (req, res) => {
+    try {
+      console.log("Stats endpoint called");
+      const stats = await storage.getRegistrationStats();
+      console.log("Stats retrieved:", stats);
+      res.json(stats);
+    } catch (error) {
+      console.error("Stats endpoint error:", error);
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 
@@ -83,15 +101,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const registrations = await storage.getAllRegistrations();
       res.json(registrations);
-    } catch (error) {
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
-
-  app.get("/api/registrations/stats", async (req, res) => {
-    try {
-      const stats = await storage.getRegistrationStats();
-      res.json(stats);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }
