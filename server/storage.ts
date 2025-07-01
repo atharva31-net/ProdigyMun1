@@ -1,4 +1,6 @@
 import { users, registrations, type User, type InsertUser, type Registration, type InsertRegistration } from "@shared/schema";
+import { db } from "./db";
+import { eq, count } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -108,4 +110,74 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async getAllRegistrations(): Promise<Registration[]> {
+    return await db.select().from(registrations);
+  }
+
+  async getRegistration(id: number): Promise<Registration | undefined> {
+    const [registration] = await db.select().from(registrations).where(eq(registrations.id, id));
+    return registration || undefined;
+  }
+
+  async createRegistration(insertRegistration: InsertRegistration): Promise<Registration> {
+    const [registration] = await db
+      .insert(registrations)
+      .values(insertRegistration)
+      .returning();
+    return registration;
+  }
+
+  async updateRegistrationStatus(id: number, status: "pending" | "confirmed" | "rejected"): Promise<Registration | undefined> {
+    const [registration] = await db
+      .update(registrations)
+      .set({ status })
+      .where(eq(registrations.id, id))
+      .returning();
+    return registration || undefined;
+  }
+
+  async deleteRegistration(id: number): Promise<boolean> {
+    const result = await db.delete(registrations).where(eq(registrations.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async getRegistrationStats(): Promise<{
+    total: number;
+    confirmed: number;
+    pending: number;
+    rejected: number;
+  }> {
+    const [totalResult] = await db.select({ count: count() }).from(registrations);
+    const [confirmedResult] = await db.select({ count: count() }).from(registrations).where(eq(registrations.status, "confirmed"));
+    const [pendingResult] = await db.select({ count: count() }).from(registrations).where(eq(registrations.status, "pending"));
+    const [rejectedResult] = await db.select({ count: count() }).from(registrations).where(eq(registrations.status, "rejected"));
+
+    return {
+      total: totalResult.count,
+      confirmed: confirmedResult.count,
+      pending: pendingResult.count,
+      rejected: rejectedResult.count,
+    };
+  }
+}
+
+export const storage = new DatabaseStorage();

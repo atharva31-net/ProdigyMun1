@@ -16,7 +16,7 @@ This is a comprehensive MUN (Model United Nations) registration portal designed 
 
 ### Backend Architecture
 - **Framework**: Express.js with TypeScript
-- **Database**: Currently uses in-memory storage (MemStorage class) as MVP solution, with Drizzle ORM configured for PostgreSQL migration
+- **Database**: PostgreSQL with Drizzle ORM (migrated from in-memory storage)
 - **API Design**: RESTful API endpoints
 - **Validation**: Zod schemas for input validation
 - **Authentication**: Simple session-based authentication for admin panel
@@ -82,9 +82,9 @@ The application is configured for separate frontend and backend deployments:
 - Environment variable configuration for production
 
 ### Database Migration Path
-- Current: In-memory storage for MVP
-- Future: PostgreSQL with Drizzle ORM
-- Migration scripts ready via `npm run db:push`
+- ✓ Completed: Migrated from in-memory storage to PostgreSQL with Drizzle ORM
+- Database tables created with `npm run db:push`
+- Admin user seeded in production database
 
 ## Recent Changes
 - July 01, 2025: Updated to MUN 2025, added school building image as hero image, added Prodigy logo to navigation
@@ -92,6 +92,7 @@ The application is configured for separate frontend and backend deployments:
 - July 01, 2025: Created comprehensive deployment configuration with netlify.toml and render.yaml
 - July 01, 2025: Added detailed deployment guide for GitHub/Netlify/Render deployment
 - July 01, 2025: Updated admin credentials as specified (admin: prodigymun0, pass: munprodiy#123@12@12)
+- July 01, 2025: Migrated from in-memory storage to PostgreSQL database with Drizzle ORM
 
 ## Changelog
 - July 01, 2025: Initial setup
