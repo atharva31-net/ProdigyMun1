@@ -47,4 +47,4 @@ A comprehensive MUN registration website for Prodigy students with admin panel a
 1. **Install dependencies:**
    ```bash
    npm install
-   
+   "# ProdigyMun1" 
