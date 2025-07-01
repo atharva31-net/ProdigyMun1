@@ -49,7 +49,12 @@ export default function AdminDashboard() {
   });
 
   // Queries
-  const { data: stats, isLoading: statsLoading } = useQuery({
+  const { data: stats, isLoading: statsLoading } = useQuery<{
+    total: number;
+    confirmed: number;
+    pending: number;
+    rejected: number;
+  }>({
     queryKey: ["/api/registrations/stats"],
     refetchInterval: 30000, // Refresh every 30 seconds
   });
@@ -155,8 +160,7 @@ export default function AdminDashboard() {
 
   // Helper functions
   const getCommitteeName = (committeeId: string) => {
-    const allCommittees = [...COMMITTEES.indian, ...COMMITTEES.international];
-    const committee = allCommittees.find(c => c.id === committeeId);
+    const committee = COMMITTEES.find(c => c.id === committeeId);
     return committee?.name || committeeId;
   };
 

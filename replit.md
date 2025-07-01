@@ -1,4 +1,4 @@
-# Prodigy MUN 2024 Registration Portal
+# Prodigy MUN 2025 Registration Portal
 
 ## Overview
 
@@ -86,8 +86,15 @@ The application is configured for separate frontend and backend deployments:
 - Future: PostgreSQL with Drizzle ORM
 - Migration scripts ready via `npm run db:push`
 
+## Recent Changes
+- July 01, 2025: Updated to MUN 2025, added school building image as hero image, added Prodigy logo to navigation
+- July 01, 2025: Combined committee selection into single list (Indian committees at top, international below)
+- July 01, 2025: Created comprehensive deployment configuration with netlify.toml and render.yaml
+- July 01, 2025: Added detailed deployment guide for GitHub/Netlify/Render deployment
+- July 01, 2025: Updated admin credentials as specified (admin: prodigymun0, pass: munprodiy#123@12@12)
+
 ## Changelog
-- July 01, 2025. Initial setup
+- July 01, 2025: Initial setup
 
 ## User Preferences
 

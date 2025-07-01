@@ -31,12 +31,10 @@ export default function RegistrationForm() {
     resolver: zodResolver(insertRegistrationSchema),
     defaultValues: {
       studentName: "",
-      grade: "",
-      division: "",
       email: "",
       committee: "",
       suggestions: "",
-    },
+    } as InsertRegistration,
   });
 
   const registrationMutation = useMutation({
@@ -67,7 +65,7 @@ export default function RegistrationForm() {
         <CardContent className="p-6 md:p-8">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Register as Delegate</h2>
-            <p className="text-gray-600">Join Prodigy MUN 2024 and represent your committee with distinction</p>
+            <p className="text-gray-600">Join Prodigy MUN 2025 and represent your committee with distinction</p>
           </div>
 
           <Form {...form}>
@@ -179,37 +177,15 @@ export default function RegistrationForm() {
                       <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        className="space-y-6"
+                        className="space-y-4"
                       >
-                        {/* Indian Committees */}
                         <div className="space-y-3">
                           <h3 className="text-lg font-semibold text-gray-800 border-b border-primary pb-2 flex items-center">
-                            <Flag className="mr-2 h-5 w-5 text-primary" />
-                            Indian Committees
+                            <NotebookPen className="mr-2 h-5 w-5 text-primary" />
+                            Available Committees
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {COMMITTEES.indian.map((committee) => (
-                              <Label
-                                key={committee.id}
-                                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200"
-                              >
-                                <RadioGroupItem value={committee.id} className="text-primary" />
-                                <span className="ml-3 text-sm font-medium text-gray-700">
-                                  {committee.name}
-                                </span>
-                              </Label>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* International Committees */}
-                        <div className="space-y-3">
-                          <h3 className="text-lg font-semibold text-gray-800 border-b border-primary pb-2 flex items-center">
-                            <Globe className="mr-2 h-5 w-5 text-primary" />
-                            International Committees
-                          </h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {COMMITTEES.international.map((committee) => (
+                            {COMMITTEES.map((committee) => (
                               <Label
                                 key={committee.id}
                                 className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200"

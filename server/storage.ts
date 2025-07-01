@@ -71,6 +71,8 @@ export class MemStorage implements IStorage {
       ...insertRegistration,
       id,
       status: "pending",
+      email: insertRegistration.email || null,
+      suggestions: insertRegistration.suggestions || null,
       createdAt: new Date(),
     };
     this.registrations.set(id, registration);

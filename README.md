@@ -1,4 +1,4 @@
-# Prodigy MUN 2024 - Registration Portal
+# Prodigy MUN 2025 - Registration Portal
 
 A comprehensive MUN registration website for Prodigy students with admin panel and deployment-ready architecture.
 
