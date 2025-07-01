@@ -69,16 +69,23 @@ The application uses Drizzle ORM with PostgreSQL schema definitions:
 
 ## Deployment Strategy
 
-The application is configured for separate frontend and backend deployments:
+The application is restructured for independent frontend and backend deployments:
+
+### Project Structure
+- **client/**: Complete frontend application with its own package.json and build process
+- **server/**: Complete backend application with its own package.json and build process
+- **shared/**: Common TypeScript types used by both frontend and backend
 
 ### Frontend Deployment (Netlify)
-- Static site generation through Vite build process
-- Optimized production bundles
-- Environment-specific configuration
+- React + Vite application in `client/` directory
+- Independent build process: `npm install && npm run build`
+- Static site generation with optimized bundles
+- Automatic API proxy configuration to backend
 
 ### Backend Deployment (Render)
-- Node.js server deployment
-- PostgreSQL database integration ready
+- Express.js + Node.js application in `server/` directory  
+- Independent build process: `npm install && npm run build`
+- PostgreSQL database integration
 - Environment variable configuration for production
 
 ### Database Migration Path
@@ -93,6 +100,7 @@ The application is configured for separate frontend and backend deployments:
 - July 01, 2025: Added detailed deployment guide for GitHub/Netlify/Render deployment
 - July 01, 2025: Updated admin credentials as specified (admin: prodigymun0, pass: munprodiy#123@12@12)
 - July 01, 2025: Migrated from in-memory storage to PostgreSQL database with Drizzle ORM
+- July 01, 2025: Restructured project for separate frontend/backend deployment with independent package.json files
 
 ## Changelog
 - July 01, 2025: Initial setup

@@ -23,14 +23,17 @@ This guide provides step-by-step instructions for deploying the Prodigy MUN regi
 
 2. **Repository structure:**
    ```
-   ├── client/           # Frontend code
-   ├── server/           # Backend code
-   ├── shared/           # Shared types
-   ├── package.json      # Dependencies
-   ├── netlify.toml      # Netlify configuration
-   ├── render.yaml       # Render configuration
-   ├── README.md         # Documentation
-   └── DEPLOYMENT.md     # This file
+   ├── client/           # Frontend code (React + Vite)
+   │   ├── src/          # React components and pages
+   │   ├── package.json  # Frontend dependencies
+   │   └── README.md     # Frontend deployment guide
+   ├── server/           # Backend code (Express + Node.js)
+   │   ├── package.json  # Backend dependencies
+   │   └── README.md     # Backend deployment guide
+   ├── shared/           # Shared TypeScript types
+   ├── netlify.toml      # Netlify configuration (frontend)
+   ├── render.yaml       # Render configuration (backend)
+   └── DEPLOYMENT.md     # This comprehensive guide
    ```
 
 ## Step 2: Backend Deployment (Render)
@@ -49,8 +52,9 @@ This guide provides step-by-step instructions for deploying the Prodigy MUN regi
 3. **Configure the deployment:**
    - **Name**: `prodigy-mun-backend`
    - **Environment**: `Node`
-   - **Build Command**: `npm install && npm run build:server`
-   - **Start Command**: `npm run start:server`
+   - **Root Directory**: `./server`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm run start`
    - **Auto-Deploy**: `Yes` (deploys automatically on git push)
 
 4. **Add Environment Variables:**
